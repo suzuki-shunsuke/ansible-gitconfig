@@ -8,6 +8,13 @@
   ghq:
     name: "{{remote_repository_path}}"
     executable: "{{gitconfig_ghq_executable}}"
+- name: Check ~/.gitconfig
+  stat:
+    path: "{{ansible_env.HOME}}/.gitconfig"
+  register: st
+- name: Back up ~/.gitconfig
+  shell: "mv {{ansible_env.HOME}}/.gitconfig {{ansible_env.HOME}}/.gitconfig.{{ansible_date_time.date}}-{{ansible_date_time.hour}}-{{ansible_date_time.minute}}-{{ansible_date_time.second}}"
+  when: st.stat.exists and not st.stat.islnk
 - name: Make symbolic links
   file:
     src: "{{ghq_root.stdout}}/github.com/{{remote_repository_path}}/.gitconfig"
