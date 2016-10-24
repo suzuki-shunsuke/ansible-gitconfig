@@ -3,7 +3,19 @@
 - hosts: default
   vars:
     ghq_executable: "{{ansible_env.HOME}}/.go/bin/ghq"
+    nonroot: "{{(ansible_env.HOME == '/root') | ternary('no', 'yes')}}"
   roles:
   - suzuki-shunsuke.ghq-module
   - role: ansible-gitconfig
     remote_repository_path: suzuki-shunsuke/git.conf
+  post_tasks:
+  - name: Install git
+    apt:
+      name: git
+    become: "{{nonroot}}"
+  - name: git config --list
+    command: git config --list
+    changed_when: false
+    register: result
+  - debug:
+      var: result
