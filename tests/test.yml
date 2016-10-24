@@ -1,8 +1,9 @@
 ---
 - include: setup.yml
 - hosts: default
+  vars:
+    ghq_executable: "{{ansible_env.HOME}}/.go/bin/ghq"
   roles:
   - suzuki-shunsuke.ghq-module
   - role: ansible-gitconfig
-    gitconfig_ghq_executable: "{{ansible_env.HOME}}/.go/bin/ghq"
     remote_repository_path: suzuki-shunsuke/git.conf

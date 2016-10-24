@@ -20,7 +20,7 @@ The directory structure of the repository where your git config is hosted must b
 Role Variables
 --------------
 
-* gitconfig_ghq_executable: The executable path of ghq command. The default is "ghq".
+* ghq_executable: The executable path of ghq command. The default is "ghq".
 * remote_repository_path: The remote repository where your gitconfig is hosted.
 
 Dependencies
@@ -36,7 +36,7 @@ Example Playbook
   roles:
   - role: suzuki-shunsuke.gitconfig
     remote_repository_path: suzuki-shunsuke/git.conf
-    gitconfig_ghq_executable: /home/vagrant/.go/bin/ghq
+    ghq_executable: "{{ansible_env.HOME}}/.go/bin/ghq"
 ```
 
 License
