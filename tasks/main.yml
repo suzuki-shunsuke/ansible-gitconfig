@@ -1,22 +1,16 @@
 ---
 # tasks file for gitconfig
-- name: ghq root
-  shell: "{{ghq_executable}} root"
-  register: ghq_root
-  changed_when: false
-- name: Clone gitconfig repository
-  ghq:
-    name: "{{remote_repository_path}}"
-    executable: "{{ghq_executable}}"
-- name: Check ~/.gitconfig
-  stat:
-    path: "{{ansible_env.HOME}}/.gitconfig"
-  register: st
-- name: Back up ~/.gitconfig
-  shell: "mv {{ansible_env.HOME}}/.gitconfig {{ansible_env.HOME}}/.gitconfig.{{ansible_date_time.date}}-{{ansible_date_time.hour}}-{{ansible_date_time.minute}}-{{ansible_date_time.second}}"
-  when: st.stat.exists and not st.stat.islnk
-- name: Make symbolic links
+- name: mkdir repo's parent directory
   file:
-    src: "{{ghq_root.stdout}}/github.com/{{remote_repository_path}}/.gitconfig"
+    path: "{{gitconfig_cloned_dest|dirname}}"
+    state: directory
+- name: Clone the gitconfig repository
+  git:
+    repo: "{{gitconfig_repo}}"
+    dest: "{{gitconfig_cloned_dest}}"
+    version: "{{gitconfig_version}}"
+- name: Make symbolic link
+  file:
+    src: "{{gitconfig_cloned_dest}}/.gitconfig"
     dest: "{{ansible_env.HOME}}/.gitconfig"
     state: link
