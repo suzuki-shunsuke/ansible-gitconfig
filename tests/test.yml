@@ -1,6 +1,11 @@
 - hosts: default
   vars:
     nonroot: "{{(ansible_env.HOME == '/root') | ternary('no', 'yes')}}"
+  pre_tasks:
+    - name: remove .gitconfig
+      file:
+        state: absent
+        path: "{{ansible_env.HOME}}/.gitconfig"
   roles:
     - role: ansible-gitconfig
       gitconfig_repo: "https://github.com/suzuki-shunsuke/git.conf"
