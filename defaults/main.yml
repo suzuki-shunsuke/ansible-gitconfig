@@ -1,3 +1,2 @@
----
-# defaults file for tmux-conf
-ghq_executable: ghq
+# defaults file for gitconfig
+gitconfig_version: HEAD

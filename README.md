@@ -1,14 +1,10 @@
-gitconfig
-==========
+# ansible-gitconfig
 
 [![Build Status](https://travis-ci.org/suzuki-shunsuke/ansible-gitconfig.svg?branch=master)](https://travis-ci.org/suzuki-shunsuke/ansible-gitconfig)
 
-Install your gitconfig hosted on the Github.
+ansible role to install gitconfig hosted on the Github.
 
-Requirements
-------------
-
-* [motemen/ghq](https://github.com/motemen/ghq)
+## Requirements
 
 The directory structure of the repository where your git config is hosted must be in the following manner.
 
@@ -17,29 +13,29 @@ The directory structure of the repository where your git config is hosted must b
   .gitconfig
 ```
 
-Role Variables
---------------
+## Role Variables
 
-* ghq_executable: The executable path of ghq command. The default is "ghq".
-* remote_repository_path: The remote repository where your gitconfig is hosted.
+name | required | default | description
+--- | --- | --- | ---
+gitconfig_repo | yes | |
+gitconfig_cloned_dest | yes | |
+gitconfig_version | no | HEAD |
 
-Dependencies
-------------
+## Dependencies
 
-* [suzuki-shunsuke.ghq-module](https://galaxy.ansible.com/suzuki-shunsuke/ghq-module/)
+Nothing.
 
-Example Playbook
-----------------
+## Example Playbook
 
 ```yaml
 - hosts: servers
   roles:
   - role: suzuki-shunsuke.gitconfig
-    remote_repository_path: suzuki-shunsuke/git.conf
-    ghq_executable: "{{ansible_env.HOME}}/.go/bin/ghq"
+    gitconfig_repo: "https://github.com/suzuki-shunsuke/git.conf"
+    gitconfig_cloned_dest: "{{ansible_env.HOME}}/repos/src/github.com/suzuki-shunsuke/git.conf"
+    gitconfig_version: mac
 ```
 
-License
--------
+## License
 
-MIT
+[MIT](LICENSE)
