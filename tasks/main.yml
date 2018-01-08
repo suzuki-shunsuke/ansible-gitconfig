@@ -11,6 +11,6 @@
     version: "{{gitconfig_version}}"
 - name: Make symbolic link
   file:
-    src: "{{gitconfig_cloned_dest}}/.gitconfig"
+    src: "{{gitconfig_cloned_dest}}/{{gitconfig_src}}"
     dest: "{{ansible_env.HOME}}/.gitconfig"
     state: link

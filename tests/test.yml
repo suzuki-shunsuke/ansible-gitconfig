@@ -1,3 +1,4 @@
+---
 - hosts: default
   vars:
     nonroot: "{{(ansible_env.HOME == '/root') | ternary('no', 'yes')}}"
@@ -10,6 +11,7 @@
     - role: ansible-gitconfig
       gitconfig_repo: "https://github.com/suzuki-shunsuke/git.conf"
       gitconfig_cloned_dest: "{{ansible_env.HOME}}/repos/src/github.com/suzuki-shunsuke/git.conf"
+      gitconfig_src: "{{(ansible_os_family == 'Darwin')|ternary('mac', 'linux')}}_gitconfig"
   post_tasks:
     - name: Install git
       apt:

@@ -1,2 +1,4 @@
+---
 # defaults file for gitconfig
 gitconfig_version: HEAD
+gitconfig_src: .gitconfig
